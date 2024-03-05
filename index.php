@@ -10,6 +10,7 @@ and open the template in the editor.
         <title></title>
     </head>
     <!--Prueba-->
+     <!--Prueba2-->
     <body>
         <?php
         // put your code here
