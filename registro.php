@@ -55,7 +55,36 @@ and open the template in the editor.
             
         </form>
         <?php
-        // put your code here
+            /*Aqui incluyo la conexion a la base de datos que esta creado en otro php separado */
+            include './conexion.php';
+            /*Aqui se obtiene la conexion de la base de datos utilizando la funcion getConexion() que he creado en otro php diferente*/
+            $conexion  = getConnexion();
+            /*Aqui compruebo si se ha enviado los datos del formulario del nuevo usuario, si es asi entra dentro*/
+            if (isset($_POST['enviar']))
+            {
+                /*compruebo que los campos no esten vacios y si es asi hago un insert para introducir los datos correspondientes*/
+                if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellido']) && isset($_REQUEST['dni']) && isset($_REQUEST['contraseña']) && isset($_REQUEST['email']) &&
+                        isset($_REQUEST['telefono'])
+                        )
+                    {/**/
+                        $consulta="insert into usuario(nombre,apellido,";
+
+                    }
+
+
+
+
+
+
+            }
+        
+        
+        
+        
+        
+        
+        
+        
         ?>
     </body>
 </html>
