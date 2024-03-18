@@ -33,13 +33,16 @@ and open the template in the editor.
             <hr>
             <p>¿No tienes cuenta?</p>
             <a href="registro.php"><input type="button" value="Registro" name="registro" /></a>
-            
-            
-            
-            
+ 
         </form>
         <?php
-        // put your code here
+        /*Aqui incluyo la conexion a la base de datos que esta creado en otro php separado */
+        include './conexion.php';
+        /*Aqui se obtiene la conexion de la base de datos utilizando la funcion getConexion() que he creado en otro php diferente*/
+        $conexion  = getConnexion();
+        
+        
+        
         ?>
     </body>
 </html>
