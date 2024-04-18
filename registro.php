@@ -81,21 +81,43 @@ and open the template in the editor.
 
         // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
         $conexion =  getConnexion();
-        if (isset($_POST['enviar']))
-        {
-                /*compruebo que los campos no esten vacios y si es asi hago un insert para introducir los datos correspondientes*/
-                if(isset($_REQUEST['id']) && isset($_REQUEST['nombre']) && isset($_REQUEST['apellido1'])&& isset($_REQUEST['apellido2']) && isset($_REQUEST['nombre']) && isset($_REQUEST['contrasena']) 
-                    && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) && isset($_REQUEST['dni'])  )
-                {
-                  mysqli_query($conexion, "INSERT INTO usuario(id_usuario,	nombre,	apellido1,apellido2,nombre_usuario,contraseña,email,telefono,dni) "
-                        . "VALUES ('" . $_REQUEST['id'] . "','" . $_REQUEST['nombre'] . "','" . $_REQUEST['apellido1']  . "','" . $_REQUEST['apellido2'] . "','" . $_REQUEST['nombre']
-                             . "','" . $_REQUEST['contrasena'] . "','" . $_REQUEST['email'] . "','" . $_REQUEST['telefono'] . "','" . $_REQUEST['dni'] . "')")
-                          or die("Problemas en el select" . mysqli_error($conexion));
+        //aqui cuando se le da al boton enviar entra
+       if (isset($_POST['enviar'])) 
+           {
+                // Verificar que los campos necesarios no estén vacíos
+                if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellido1']) && isset($_REQUEST['apellido2']) 
+                    && isset($_REQUEST['contrasena']) && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) 
+                    && isset($_REQUEST['dni'])) {
 
-                print "Se ha creado el usuario";
-            } 
-             
-        }
+                    //Aqui se preparan los datos para hacer el insert
+                    $nombre = mysqli_real_escape_string($conexion, $_REQUEST['nombre']);
+                    $apellido1 = mysqli_real_escape_string($conexion, $_REQUEST['apellido1']);
+                    $apellido2 = mysqli_real_escape_string($conexion, $_REQUEST['apellido2']);
+                    $contrasena = mysqli_real_escape_string($conexion, $_REQUEST['contrasena']);
+                    $email = mysqli_real_escape_string($conexion, $_REQUEST['email']);
+                    $telefono = mysqli_real_escape_string($conexion, $_REQUEST['telefono']);
+                    $dni = mysqli_real_escape_string($conexion, $_REQUEST['dni']);
+
+                    // aqui ya se insertan los datos en la base de datos
+                    $sql = "INSERT INTO usuario(nombre, apellido1, apellido2, nombre_usuario, contraseña, email, telefono, dni) 
+                            VALUES ('$nombre', '$apellido1', '$apellido2', '$nombre', '$contrasena', '$email', '$telefono', '$dni')";
+
+                    // aqui si la consulta se ha hecho correctamente saldra un mensaje de que se ha creado bien el usuario
+                    if (mysqli_query($conexion, $sql)) {
+                        echo "Se ha creado el usuario";
+                    } else //aqui si no se a hecho bien la consulta saldra un error
+                        {
+                        echo "Error al insertar datos: " . mysqli_error($conexion);
+                    }
+
+                    // aqui cierro la conexion
+                    mysqli_close($conexion);
+                } else //aqui si falta algun dato le saldra un mensaje de que le faltan datos
+                    {
+                    echo "Por favor, complete todos los campos";
+                }
+            }
+
 
 
 
@@ -115,10 +137,7 @@ and open the template in the editor.
             <hr>
             <h3>Introducir datos:</h3>
             <br>
-            id:
-             <input type="text" name="id" value="" />
-            <br>
-            <br>
+            
             Nombre:
             <input type="text" name="nombre" value="" />
             <br>
