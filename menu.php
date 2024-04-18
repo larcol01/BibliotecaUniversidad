@@ -34,7 +34,7 @@ and open the template in the editor.
         
         
         //menu de invitado
-        if($registros == "inivitado"){
+        if($registros == "invitado"){
             
             
         }

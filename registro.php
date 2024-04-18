@@ -10,20 +10,126 @@ and open the template in the editor.
         <title>Registro</title>
     </head>
     <body>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                text-align: center;
+            }
+            form {
+                margin: 20px auto;
+                width: 300px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                margin-top: 0;
+            }
+            hr {
+                margin-top: 20px;
+                border: 0;
+                border-top: 1px solid #d9bbbb;
+            }
+            p {
+                margin-top: 20px;
+            }
+            a {
+                text-decoration: none;
+            }
+            input[type="text"],
+            input[type="password"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="submit"],
+            input[type="button"] {
+                width: calc(100% - 20px);
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+            input[type="button"] {
+                padding: 10px 20px;
+                background-color: #008CBA;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            input[type="button"]:hover {
+                background-color: #005f75;
+            }
+        </style>
+       
+        <?php
+         /* Inlcuimos la conexion a la BD */
+        include 'conexion.php';
+
+        // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
+        $conexion =  getConnexion();
+        if (isset($_POST['enviar']))
+        {
+                /*compruebo que los campos no esten vacios y si es asi hago un insert para introducir los datos correspondientes*/
+                if(isset($_REQUEST['id']) && isset($_REQUEST['nombre']) && isset($_REQUEST['apellido1'])&& isset($_REQUEST['apellido2']) && isset($_REQUEST['nombre']) && isset($_REQUEST['contrasena']) 
+                    && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) && isset($_REQUEST['dni'])  )
+                {
+                  mysqli_query($conexion, "INSERT INTO usuario(id_usuario,	nombre,	apellido1,apellido2,nombre_usuario,contraseña,email,telefono,dni) "
+                        . "VALUES ('" . $_REQUEST['id'] . "','" . $_REQUEST['nombre'] . "','" . $_REQUEST['apellido1']  . "','" . $_REQUEST['apellido2'] . "','" . $_REQUEST['nombre']
+                             . "','" . $_REQUEST['contrasena'] . "','" . $_REQUEST['email'] . "','" . $_REQUEST['telefono'] . "','" . $_REQUEST['dni'] . "')")
+                          or die("Problemas en el select" . mysqli_error($conexion));
+
+                print "Se ha creado el usuario";
+            } 
+             
+        }
+
+
+
+
+            
         
+        
+        
+        
+        
+        
+        
+        
+        ?>
         <form name="form" action="" method="POST" enctype="multipart/form-data">
             <h1>Registro</h1>
             <hr>
             <h3>Introducir datos:</h3>
             <br>
-            
+            id:
+             <input type="text" name="id" value="" />
+            <br>
+            <br>
             Nombre:
             <input type="text" name="nombre" value="" />
             <br>
             <br>
             
-            Apellido:
-            <input type="text" name="apellido" value="" />
+            Apellido1:
+            <input type="text" name="apellido1" value="" />
+            <br>
+            <br>
+             Apellido2:
+            <input type="text" name="apellido2" value="" />
             <br>
             <br>
             
@@ -56,42 +162,5 @@ and open the template in the editor.
             
             
         </form>
-        <?php
-            /*Aqui incluyo la conexion a la base de datos que esta creado en otro php separado */
-            include './conexion.php';
-            /*Aqui se obtiene la conexion de la base de datos utilizando la funcion getConexion() que he creado en otro php diferente*/
-            $conexion  = getConnexion();
-            /*Aqui compruebo si se ha enviado los datos del formulario del nuevo usuario, si es asi entra dentro*/
-            
-                 
-                /*compruebo que los campos no esten vacios y si es asi hago un insert para introducir los datos correspondientes*/
-                if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellido']) && isset($_REQUEST['dni']) && isset($_REQUEST['contraena']) 
-                    && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) && isset($_REQUEST['alumno']) || isset($_REQUEST['Alumno_doctorado/Proyecto_fin_de_carrera']) 
-                        || isset($_REQUEST['profesor']) || isset($_REQUEST['autor']) )
-                {
-                    $consulta = "insert into usuario(nombre, apellido,contraseña,email,telefono,dni) "
-                        . "VALUES ('" . $_REQUEST['nombre'] . "','" . $_REQUEST['apellido']   
-                        . "','" . $_REQUEST['contrasena'] . "','" . $_REQUEST['email'] . "','" . $_REQUEST['telefono'] . "','" . $_REQUEST['dni'] . "')";
-
-
-                    $consulta = mysqli_query($conexion, $consulta)
-                            or die("Fallo en la consulta");
-                }
-
-
-
-
-
-
-            
-        
-        
-        
-        
-        
-        
-        
-        
-        ?>
     </body>
 </html>
